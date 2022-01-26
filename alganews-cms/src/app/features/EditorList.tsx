@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
 import { User } from "../../sdk/@types/User";
 import UserService from "../../sdk/services/User.service";
@@ -16,6 +17,14 @@ export default function EditorList() {
         .then(setEditors)
         
     },[])
+
+    if(!editors.length)
+
+    return <EditorListWrapper>
+        <Skeleton height={88} width={320}/>
+        <Skeleton height={88} width={320}/>
+        <Skeleton height={88} width={320}/>
+    </EditorListWrapper>
 
     return <EditorListWrapper>
 
