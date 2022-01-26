@@ -7,6 +7,7 @@ import PostService from "../../sdk/services/Post.service";
 import Button from "../components/Button/Button";
 import ImageUpload from "../components/ImageUpload/ImageUpload";
 import Input from "../components/Input/Input";
+import Loading from "../components/Loading/Loading";
 import MarkdownEditor from "../components/MarkdownEditor/MarkdownEditor";
 import TagInput from "../components/TagInput/TagInput";
 import WordPriceCounter from "../components/WordPriceCounter/WordPriceCounter";
@@ -19,26 +20,40 @@ export default function FormList() {
     const [title, setTitle] = useState('')
     const [imageUrl, setImageUrl] = useState('')
 
+    const [publishing, setPublishing] = useState(false)
+
    
     
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
 
-        const NewPost = {
+        try {
 
-            body,
-            tags: tags.map(tag => tag.text),
-            title,
-            imageUrl,
+            setPublishing(true)
+    
+            const NewPost = {
+    
+                body,
+                tags: tags.map(tag => tag.text),
+                title,
+                imageUrl,
+            }
+            const newPost = await PostService.insertPost(NewPost)
+            Info({
+                title: 'Post salvo',
+                description: 'Vocè acabou de criar seu post!' + newPost.id
+            })
+        } finally {
+
+    
+            setPublishing(false)
         }
-        const newPost = await PostService.insertPost(NewPost)
-        Info({
-            title: 'Post salvo',
-            description: 'Vocè acabou de criar seu post!' + newPost.id
-        })
+
     }
 
     return <FormListWrapper onSubmit={handleSubmit}>
+
+        <Loading show={publishing}/>
     
         <Input
         label={'Titulo'}
@@ -50,6 +65,7 @@ export default function FormList() {
             <ImageUpload
             onImageUpload={setImageUrl}
             label={'Thumbnail do post'}
+            
             />
        
             <MarkdownEditor
