@@ -8,8 +8,8 @@ class FileService extends Service {
 
     private static getSignedUrl(fileInfo: File.UploadRequestInput) {
         return this.Http.post<File.UploadRequest>('/upload-requests', fileInfo)
-        .then(this.getData)
-        .then(res => res.uploadSignedUrl)
+            .then(this.getData)
+            .then(res => res.uploadSignedUrl)
     }
 
     private static uploadFileToSignedUrl(signedUrl: string, file: File) {
@@ -18,15 +18,15 @@ class FileService extends Service {
                 'Content-Type': file.type
             }
         })
-        .then(this.getData)
+            .then(this.getData)
     }
 
     private static getFileExtension(fileName: string) {
 
         const [extension] = fileName.split('.').slice(-1)
 
-        return extension 
-       
+        return extension
+
     }
 
     private static genereteFileName(extension: string) {
@@ -49,10 +49,10 @@ class FileService extends Service {
         const imageUrl = await FileService.uploadFileToSignedUrl(singedUrl, file)
 
         console.log(imageUrl);
-        
+
 
         return singedUrl.split('?')[0]
-        
+
     }
 }
 

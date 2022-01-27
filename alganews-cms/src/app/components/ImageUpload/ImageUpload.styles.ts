@@ -2,15 +2,15 @@
 import styled from "styled-components";
 import { Wrapper as Button } from "../Button/Button.styles";
 
-export const Wrapper = styled.div ` 
+export const Wrapper = styled.div` 
 
 `
 
-export const Input = styled.input ` 
+export const Input = styled.input` 
 display: none;
 `
 
-export const ImagePreview = styled.div<{ preview: string}> ` 
+export const ImagePreview = styled.div<{ preview: string }> ` 
 height: 100%;
 background-image: url(${p => p.preview});
 background-position: center;
@@ -21,7 +21,7 @@ align-items: center;
 
 `
 
-export const ImagePreviewWrapper = styled.div ` 
+export const ImagePreviewWrapper = styled.div` 
 background-color: #274060;
 height: 240px;
 
@@ -45,7 +45,7 @@ ${Button} {
 `
 
 
-export const Label = styled.label ` 
+export const Label = styled.label` 
 background-color: #09f;
 color: #fff;
 padding: 24px;
