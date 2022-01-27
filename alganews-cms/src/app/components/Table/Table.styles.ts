@@ -25,3 +25,9 @@ padding: 0 8px;
 export const TableHeader = styled.tr ` 
 
 `
+
+export const TablePagination = styled.div ` 
+
+display: flex;
+gap: 8px;
+`
