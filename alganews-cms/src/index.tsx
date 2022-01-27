@@ -2,28 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './core/imports.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './app/views/Home.view';
-import Notfound from './app/views/NotFound.view';
 import GlobalStyles from './core/GlobalStyles';
-import EditorsList from './app/views/EditorsList.view';
-import Form from './app/views/Form.view';
-import EditorProfile from './app/views/EditorProfile.view';
-
-
+import App from './app/components/Index';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-    <Routes>
-      <Route path={"/"} element={<Home/>}/>
-      <Route path={"/editores"} element={<EditorsList/>}/>
-      <Route path={"/editores/:id"} element={<EditorProfile/>}/>
-      <Route path={"/posts/criar"} element={<Form/>}/>
-      <Route path= '*' element={<Notfound/>}/>
-    </Routes >
-    </BrowserRouter>
+    <App />
     <GlobalStyles/>
   </React.StrictMode>,
   document.getElementById('root')

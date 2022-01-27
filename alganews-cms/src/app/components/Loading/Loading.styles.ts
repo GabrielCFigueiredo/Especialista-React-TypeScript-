@@ -103,7 +103,7 @@ align-items: center;
 justify-content: center;
 
  
-backdrop-filter: blur(3px);
+backdrop-filter: blur(5px);
 
 @keyframes pop {
     from {

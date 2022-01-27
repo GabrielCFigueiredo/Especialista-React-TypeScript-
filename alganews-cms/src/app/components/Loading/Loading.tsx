@@ -6,11 +6,11 @@ interface loadingProps {
 
 export default function Loading(props: loadingProps) {
 
-    if(!props.show)
+    if (!props.show)
 
-    return null 
+        return null
 
-    
+
     return <LoadingWrapper>
         <div className="lds-roller">
             <div></div>

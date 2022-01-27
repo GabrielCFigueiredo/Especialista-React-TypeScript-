@@ -25,6 +25,7 @@ export default function ImageUpload(props: ImageUploadProps ) {
     function hendleChange(e: ChangeEvent<HTMLInputElement>) {
 
 
+
         const file = e.target.files![0]
 
         if(file){
@@ -54,6 +55,7 @@ export default function ImageUpload(props: ImageUploadProps ) {
 
         
     }
+
 
     if(filePreview){
         return <IU.ImagePreviewWrapper>

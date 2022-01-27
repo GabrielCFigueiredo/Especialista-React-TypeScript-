@@ -13,15 +13,15 @@ export default function Home() {
     usePageTitle('Home')
     return (
         <DefaultLayout>
-            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center'}}>
-            <UserTopTags/>
-            <UserValue/>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center' }}>
+                <UserTopTags />
+                <UserValue />
             </div>
             <ErrorBouny component="performance">
-                <UserMetrics/>
+                <UserMetrics />
             </ErrorBouny>
             <ErrorBouny component="lista de posts">
-                <PostsList/>
+                <PostsList />
             </ErrorBouny>
         </DefaultLayout>
     )

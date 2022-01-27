@@ -22,17 +22,17 @@ export default function FormList() {
 
     const [publishing, setPublishing] = useState(false)
 
-   
-    
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
         try {
 
             setPublishing(true)
-    
+
             const NewPost = {
-    
+
                 body,
                 tags: tags.map(tag => tag.text),
                 title,
@@ -45,7 +45,7 @@ export default function FormList() {
             })
         } finally {
 
-    
+
             setPublishing(false)
         }
 
@@ -53,39 +53,39 @@ export default function FormList() {
 
     return <FormListWrapper onSubmit={handleSubmit}>
 
-        <Loading show={publishing}/>
-    
+        <Loading show={publishing} />
+
         <Input
-        label={'Titulo'}
-        value={title}
-        onChange={e => setTitle(e.currentTarget.value)}
-        placeholder={'Digite seu Titulo'}
+            label={'Titulo'}
+            value={title}
+            onChange={e => setTitle(e.currentTarget.value)}
+            placeholder={'Digite seu Titulo'}
         />
-        
-            <ImageUpload
+
+        <ImageUpload
             onImageUpload={setImageUrl}
             label={'Thumbnail do post'}
-            
-            />
-       
-            <MarkdownEditor
+
+        />
+
+        <MarkdownEditor
             onchange={setBody}
-            />
+        />
         <TagInput
-        tags={tags}
-        onAdd= {tag => setTags([...tags, tag])}
-        onDelete={index => setTags(tags.filter((tag, i) => i !== index))}
-        placeholder={'Insira as tag deste post'}
+            tags={tags}
+            onAdd={tag => setTags([...tags, tag])}
+            onDelete={index => setTags(tags.filter((tag, i) => i !== index))}
+            placeholder={'Insira as tag deste post'}
         />
         <FormCount>
             <WordPriceCounter
-            pricePerCount={0.25}
-            wordsCount={countWordsInMarkdown(body)}
+                pricePerCount={0.25}
+                wordsCount={countWordsInMarkdown(body)}
             />
             <Button
-            variant={'primary'}
-            label={'salvar post'}
-            type={'submit'}
+                variant={'primary'}
+                label={'salvar post'}
+                type={'submit'}
             />
         </FormCount>
     </FormListWrapper>
