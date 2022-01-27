@@ -1,13 +1,20 @@
 
+import { useEffect } from "react";
 import { transparentize } from "polished";
 import { TableInstance } from "react-table";
+import Button from "../Button/Button";
 import NoData from "../NoData/NoData";
+import { BodyCell, Heading, HeadingCell, TablePagination, TableWrapper } from "./Table.styles";
 
-import { BodyCell, Heading, HeadingCell, TableWrapper } from "./Table.styles";
+interface TableProps <T extends object> {
+
+    instance: TableInstance< T >
+    onPaginete?: (newPage: number) => any
+}
 
 
 
-export default function Table < T extends Object >({ instance }: { instance: TableInstance< T >}) {
+export default function Table < T extends Object >({ instance, onPaginete }:  TableProps<T>) {
    
 
     const {
@@ -15,8 +22,24 @@ export default function Table < T extends Object >({ instance }: { instance: Tab
         getTableBodyProps,
         prepareRow,
         headerGroups,
-        rows
+        rows,
+        canPreviousPage,
+        canNextPage,
+        pageOptions,
+        pageCount,
+        gotoPage,
+        nextPage,
+        previousPage,
+        state: {
+            pageIndex,
+        }
     } = instance
+
+    useEffect(() => {
+
+        onPaginete && 
+        onPaginete(pageIndex)
+    },[pageIndex, onPaginete])
 
     return (
         <>
@@ -66,6 +89,38 @@ export default function Table < T extends Object >({ instance }: { instance: Tab
                 <NoData height={360}/>
             </div>
         }
+
+        <TablePagination>
+            <Button 
+            variant="primary"
+            label={'primeira página'}
+            onClick={() => gotoPage(0)}
+            disabled={!canPreviousPage}
+            />
+            <Button 
+            variant="primary"
+            label={'página anterior'}
+            onClick={previousPage}
+            disabled={!canPreviousPage}
+            />
+            <Button 
+            variant="primary"
+            label={'proxíma página'}
+            onClick={nextPage}
+            disabled={!canNextPage}
+            />
+            <Button 
+            variant="primary"
+            label={'última página'}
+            onClick={() => gotoPage(pageCount -1)}
+            disabled={!canNextPage}
+            />
+
+            <span>
+
+                Página { pageIndex + 1 } de { pageOptions.length }
+            </span>
+        </TablePagination>
         </>
     )
 }
