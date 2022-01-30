@@ -2,9 +2,11 @@
 import { useEffect } from "react";
 import { transparentize } from "polished";
 import { TableInstance } from "react-table";
-import Button from "../Button/Button";
 import NoData from "../NoData/NoData";
 import { BodyCell, Heading, HeadingCell, TablePagination, TableWrapper } from "./Table.styles";
+import ReactPaginate from "react-paginate";
+import Icon from "@mdi/react";
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
 interface TableProps <T extends object> {
 
@@ -23,13 +25,9 @@ export default function Table < T extends Object >({ instance, onPaginete }:  Ta
         prepareRow,
         headerGroups,
         rows,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
         pageCount,
         gotoPage,
-        nextPage,
-        previousPage,
+       
         state: {
             pageIndex,
         }
@@ -91,35 +89,15 @@ export default function Table < T extends Object >({ instance, onPaginete }:  Ta
         }
 
         <TablePagination>
-            <Button 
-            variant="primary"
-            label={'primeira página'}
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
+            
+            <ReactPaginate
+            pageCount={pageCount}
+            onPageChange={page => gotoPage(page.selected)}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={4}
+            nextLabel={<Icon path={mdiChevronRight} size={"16"}/>}
+            previousLabel={<Icon path={mdiChevronLeft} size={"16"} />}
             />
-            <Button 
-            variant="primary"
-            label={'página anterior'}
-            onClick={previousPage}
-            disabled={!canPreviousPage}
-            />
-            <Button 
-            variant="primary"
-            label={'proxíma página'}
-            onClick={nextPage}
-            disabled={!canNextPage}
-            />
-            <Button 
-            variant="primary"
-            label={'última página'}
-            onClick={() => gotoPage(pageCount -1)}
-            disabled={!canNextPage}
-            />
-
-            <span>
-
-                Página { pageIndex + 1 } de { pageOptions.length }
-            </span>
         </TablePagination>
         </>
     )

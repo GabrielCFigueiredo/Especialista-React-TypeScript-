@@ -8,6 +8,10 @@ import Table from "../components/Table/Table"
 import { format } from 'date-fns'
 import Skeleton from "react-loading-skeleton"
 import Loading from "../components/Loading/Loading"
+import PostPreview from "./PostPreview"
+import modal from "../../core/utilis/modal"
+
+
 
 
 
@@ -17,10 +21,14 @@ export default function PostsList() {
   const [error, setError] = useState<Error>()
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
+  
+
 
   useEffect(() => {
 
     setLoading(true)
+      
+
 
     PostService.getAllPosts({
       page,
@@ -68,8 +76,26 @@ export default function PostsList() {
             alt={props.row.original.editor.name}
             title={props.row.original.editor.name}
           />
-          {props.value}
+          <a href={`/posts/${props.row.original.id}`}
+          onClick={e => {
+            e.preventDefault();
+            modal({
+              children: <PostPreview
+              postId={props.row.original.id}
+              />
+            })
+          }}
+          >
+            {props.value}
+          </a>
+
+          
+          
         </div>
+
+
+        
+
 
 
       },
@@ -119,10 +145,10 @@ export default function PostsList() {
   const instance = useTable<Posts.PostSummary>(
     {
       columns,
-       data: posts?.content || [],
-       manualPagination: true,
-       pageCount: posts?.totalPages,
-       initialState: { pageIndex: 0}
+      data: posts?.content || [],
+      manualPagination: true,
+      pageCount: posts?.totalPages,
+      initialState: { pageIndex: 0 }
     },
     usePagination
   )
@@ -141,11 +167,12 @@ export default function PostsList() {
 
   return (
     <div>
-    <Loading show={loading}/>
-    <Table
-    instance={instance}
-    onPaginete={setPage}
-  />
+    
+      <Loading show={loading} />
+      <Table
+        instance={instance}
+        onPaginete={setPage}
+      />
     </div>
   )
 
