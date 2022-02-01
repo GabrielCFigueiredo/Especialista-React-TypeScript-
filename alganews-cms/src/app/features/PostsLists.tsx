@@ -10,8 +10,7 @@ import Skeleton from "react-loading-skeleton"
 import Loading from "../components/Loading/Loading"
 import PostPreview from "./PostPreview"
 import modal from "../../core/utilis/modal"
-
-
+import { PostAnchor } from "../components/PostAnchor"
 
 
 
@@ -21,13 +20,13 @@ export default function PostsList() {
   const [error, setError] = useState<Error>()
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
-  
+
 
 
   useEffect(() => {
 
     setLoading(true)
-      
+
 
 
     PostService.getAllPosts({
@@ -70,31 +69,42 @@ export default function PostsList() {
 
         accessor: 'title', // accessor is the "key" in the data
 
-        Cell: (props) => <div style={{ textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        Cell: (props) => <div
+          style={{
+            textAlign: 'left',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            maxWidth: 270,
+            
+          }}>
           <img width={'24px'} height={'24px'}
             src={props.row.original.editor.avatarUrls.small}
             alt={props.row.original.editor.name}
             title={props.row.original.editor.name}
           />
-          <a href={`/posts/${props.row.original.id}`}
-          onClick={e => {
-            e.preventDefault();
-            modal({
-              children: <PostPreview
-              postId={props.row.original.id}
-              />
-            })
-          }}
+          <PostAnchor 
+          title={props.value}
+          href={`/posts/${props.row.original.id}`}
+            onClick={e => {
+              e.preventDefault();
+              modal({
+                children: <PostPreview
+                  postId={props.row.original.id}
+                  hideData={true}
+                />
+              })
+            }}
           >
             {props.value}
-          </a>
+          </PostAnchor>
 
-          
-          
+
+
         </div>
 
 
-        
+
 
 
 
@@ -167,7 +177,7 @@ export default function PostsList() {
 
   return (
     <div>
-    
+
       <Loading show={loading} />
       <Table
         instance={instance}
