@@ -1,0 +1,20 @@
+{
+  "name": "alganews-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "add": "^2.0.6",
+    "global": "^4.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
