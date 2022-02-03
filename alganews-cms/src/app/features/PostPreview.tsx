@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
+import Confirm from "../../core/utilis/Confirm"
+import info from "../../core/utilis/Info"
+import modal from "../../core/utilis/modal"
 import { Posts } from "../../sdk/@types/Posts"
 import PostService from "../../sdk/services/Post.service"
 import Button from "../components/Button/Button"
+
 import Loading from "../components/Loading/Loading"
 import MarkdownEditor from "../components/MarkdownEditor/MarkdownEditor"
 
@@ -10,13 +14,34 @@ import MarkdownEditor from "../components/MarkdownEditor/MarkdownEditor"
 export interface PostPreviewProps {
     
     postId: number
-    hideData: boolean
 }
 
 function PostPreview(props: PostPreviewProps) {
 
+    
+
     const [post, setPost] = useState<Posts.PostDetailed>()
     const [loading, setLoading] = useState(false)
+
+
+    async function publishing(): Promise<void> {
+
+        await PostService.publishingPost(props.postId)
+
+        info({
+            title: 'Post Publicado',
+            description: 'Você publicou o post com sucesso'
+        })
+        
+    }
+
+    function reOpenModal() {
+
+        modal({
+            children: <PostPreview postId={props.postId}/>
+        })
+        
+    }
 
 
     useEffect(() => {
@@ -37,6 +62,7 @@ function PostPreview(props: PostPreviewProps) {
 
     return null
 
+
     return <WrapperPostPreview>
 
         <CardPreview>
@@ -47,11 +73,21 @@ function PostPreview(props: PostPreviewProps) {
            label={'Publicar'}
            variant="danger"
            disabled={post.published}
+           onClick={() => {
+               Confirm({
+
+                   title: 'publicar o post?',
+                   onConfirm: publishing,
+                   onCancel: reOpenModal
+                   
+               })
+           }}
            />
            <Button
            label={'Editar'}
            variant="primary"
            disabled={post.published}
+           onClick={() => window.location.pathname = (`/posts/editar/${props.postId}`)}
            />
         
         </CardPreview>
