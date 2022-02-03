@@ -91,7 +91,6 @@ export default function PostsList() {
               modal({
                 children: <PostPreview
                   postId={props.row.original.id}
-                  hideData={true}
                 />
               })
             }}

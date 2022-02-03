@@ -6,6 +6,7 @@ import EditorsList from "../views/EditorsList.view";
 import Form from "../views/Form.view";
 import Home from "../views/Home.view";
 import Notfound from "../views/NotFound.view";
+import PostEditView from "../views/PostEditView";
 
 
 
@@ -32,6 +33,7 @@ export default function App() {
             <Route path={"/editores"} element={<EditorsList />} />
             <Route path={"/editores/:id"} element={<EditorProfile />} />
             <Route path={"/posts/criar"} element={<Form />} />
+            <Route path={"/posts/editar/:id"} element={<PostEditView />} />
             <Route path='*' element={<Notfound />} />
         </Routes >
     </BrowserRouter>

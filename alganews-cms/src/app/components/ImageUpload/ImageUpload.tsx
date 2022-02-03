@@ -1,7 +1,7 @@
 import { mdiUpload } from '@mdi/js'
 import { mdiDelete } from '@mdi/js'; 
 import Icon from '@mdi/react'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import FileService from '../../../sdk/services/File.service';
 import Button from '../Button/Button'
 import Loading from '../Loading/Loading';
@@ -12,20 +12,20 @@ export interface ImageUploadProps  {
 
     label: string,
     onImageUpload: (imageUrl: string) => any
+    image?: string
     
     
 }
 
 export default function ImageUpload(props: ImageUploadProps ) {
 
-    const [filePreview, setFilePreview] = useState <string | null>(null)
+    const [filePreview, setFilePreview] = useState <string | undefined>(undefined)
 
     const [pushing, setPushing] = useState(false)
 
     function hendleChange(e: ChangeEvent<HTMLInputElement>) {
 
-
-
+       
         const file = e.target.files![0]
 
         if(file){
@@ -57,6 +57,12 @@ export default function ImageUpload(props: ImageUploadProps ) {
     }
 
 
+    useEffect(() => {
+
+        setFilePreview(props.image)
+
+    },[props.image])
+
     if(filePreview){
         return <IU.ImagePreviewWrapper>
             <Loading show={pushing} />
@@ -67,7 +73,7 @@ export default function ImageUpload(props: ImageUploadProps ) {
                         size= {'24px'}
                         path={mdiDelete}
                         /></div>}
-                    onClick={() => setFilePreview(null)}
+                    onClick={() => setFilePreview(undefined)}
                     />
                     
                 </IU.ImagePreview>

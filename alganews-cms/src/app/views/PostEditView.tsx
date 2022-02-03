@@ -1,16 +1,19 @@
+import { useParams } from "react-router-dom"
 import usePageTitle from "../../core/hooks/usePageTitle"
 import FormList from "../features/FormList"
 import DefaultLayout from "../layouts/Default/DefaultLayouts"
 
 
 
-export default function Form() {
+export default function PostEditView() {
 
-    usePageTitle('Posts')
+    const params = useParams()
+
+    usePageTitle('Post-Edit')
    
     return  (
         <DefaultLayout>
-            <FormList />
+            <FormList postId={Number(params.id)}/>
         </DefaultLayout>
     )
 }
