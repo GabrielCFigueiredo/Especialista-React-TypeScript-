@@ -2,7 +2,8 @@ import { mdiUpload } from '@mdi/js'
 import { mdiDelete } from '@mdi/js'; 
 import Icon from '@mdi/react'
 import { ChangeEvent, useEffect, useState } from 'react'
-import FileService from '../../../sdk/services/File.service';
+import { FileService } from '../../../sdk';
+
 import Button from '../Button/Button'
 import Loading from '../Loading/Loading';
 import * as IU from './ImageUpload.styles'
@@ -58,6 +59,7 @@ export default function ImageUpload(props: ImageUploadProps ) {
 
 
     useEffect(() => {
+
 
         setFilePreview(props.image)
 
