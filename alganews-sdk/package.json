@@ -1,0 +1,25 @@
+{
+  "name": "gabriel-figueiredo-sdk",
+  "version": "2.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublish": "npm build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "add": "^2.0.6",
+    "axios": "^0.25.0",
+    "date-fns": "^2.28.0",
+    "global": "^4.4.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4",
+    "typescript": "^4.5.5"
+  }
+}
