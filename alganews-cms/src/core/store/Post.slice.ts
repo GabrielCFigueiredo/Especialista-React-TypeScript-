@@ -1,16 +1,18 @@
-import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createReducer, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit";
 import { PostService } from "../../sdk";
 import { Posts } from "../../sdk/@types/Posts";
 
 
 interface PostSliceState {
     pagineted?: Posts.PostsPaginated
-    fecthing: boolean;
+    fetching: boolean;
+    counter: number
 }
 
 const initialState: PostSliceState = {
 
-    fecthing: false,
+    fetching: false,
+    counter: 0,
 
     pagineted: {
         page: 0,
@@ -21,44 +23,39 @@ const initialState: PostSliceState = {
     }
 }
 
-export const fecthPosts = createAsyncThunk(
+export const fetchPosts = createAsyncThunk(
     'post/fecthPosts',
 
-    async function() {
+    async function(query: Posts.Query) {
 
-        const posts = await PostService.getAllPosts({})
+        const posts = await PostService.getAllPosts(query)
 
         return posts
         
     }
 
 )
- 
-const PostSlice = createSlice ({
-    name: "post",
-    initialState,
-    reducers: {
-        addPost(state, action: PayloadAction<Posts.PostSummary>) {
-            state.pagineted?.content?.push(action.payload)
-        }
-    },
-    extraReducers(builder) {
 
-        const pendingActions = isPending(fecthPosts)
-        const fulfilledActions = isFulfilled(fecthPosts)
-        const rejectedActions = isRejected(fecthPosts)
+export const increment = createAction('post/increment')
 
-        builder.addCase(fecthPosts.fulfilled, (state, action) => {
-            state.pagineted =action.payload;
-        }).addMatcher(pendingActions, (state) => {
-            state.fecthing = true
-        }).addMatcher(fulfilledActions, (state) => {
-            state.fecthing = false
-        }).addMatcher(rejectedActions, (state) => {
-            state.fecthing = false
-        })
-    }
+ export const PostReducer = createReducer(initialState, (builder) => {
+
+    const pendingActions = isPending(fetchPosts)
+    const fulfilledActions = isFulfilled(fetchPosts)
+    const rejectedActions = isRejected(fetchPosts)
+
+    builder.addCase(increment, (state) => {
+        state.counter++
+    })
+    builder.addCase(fetchPosts.fulfilled, (state, action) => {
+        state.pagineted =action.payload;
+    }).addMatcher(pendingActions, (state) => {
+        state.fetching = true
+    }).addMatcher(fulfilledActions, (state) => {
+        state.fetching = false
+    }).addMatcher(rejectedActions, (state) => {
+        state.fetching = false
+    })
+
 })
-
-export const postReducer = PostSlice.reducer
-export const { addPost } = PostSlice.actions
+ 
